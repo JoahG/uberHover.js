@@ -66,7 +66,8 @@
           if (height < 1) return false;
 
           // define points for polygon
-          points = (e.pageX - $ul.offset().left).toString() + ' 0, 0 ' + height.toString() + ', ' + width.toString() + ' ' + height.toString();
+          //(e.pageX - $ul.offset().left).toString() + ' 0,
+          points = $(this).width().toString() + ' -5, 0 -5, 0 ' + height.toString() + ', ' + width.toString() + ' ' + height.toString();
          
           style = 'left:' + ($(this).offset().left - $(this).parent().offset().left) + 'px;bottom:0;';
 
@@ -77,8 +78,10 @@
 
           if (width < 1) return false;
 
-          points = '0 ' + (e.pageY - $ul.offset().top + 3).toString() + ', ' + '0 0, ' + width.toString() + ' 0, ' + width.toString() + ' ' + height.toString();
-          style = 'top:' + ($(this).offset().top - $(this).parent().offset().top) + 'px;right:0;';
+          //(e.pageY - $ul.offset().top + 3).toString()
+
+          points = '-5 ' + $(this).height().toString() + ', ' + '-5 0, ' + width.toString() + ' 0, ' + width.toString() + ' ' + height.toString();
+          style = 'top:' + ($(this).offset().top - $(this).parent().offset().top).toString() + 'px;right:0;';
         }
 
         // add the hoverhelper svg to the dom (inside the parent ul)
@@ -100,6 +103,7 @@
           // set the timeout to remove the svg after 500ms
           setTimeout(function() {
             $('#hoverHelper').remove();
+            $('.uberHover li.hover').removeClass('hover');
           }, 500);
 
         // (on mouseleave)
@@ -115,10 +119,13 @@
 
     // (on mouseleave)
     }, function() {
+      $('.uberHover li.hover').removeClass('hover');
 
       // set the timer to automatically remove the polygon after 10ms if user isn't hoverin over it
       remPolygon = setTimeout(function() {
-        if (!overPolygon) $('#hoverHelper').remove();
+        if (!overPolygon) {
+          $('#hoverHelper').remove();
+        }
       }, 10);
 
       // remove the mousemove binding
